@@ -38,8 +38,8 @@ gates:
     input: ""
     state: "/home/pedro_victor/dev/NGV_Digital/workspaces/ofertas-ngv/.codex/state/notification-ledger.json"
   domain_lifecycle:
-    status: NOT_REQUIRED
-    input: "domain is PENDING; no DNS/deploy requested"
+    status: BLOCKED
+    input: "Hostinger purchase attempted once on 2026-08-13; HTTP 500 Billing:9999 and immediate portfolio reconciliation found no domain. No retry by idempotency guard. Vercel project/link/Git connection exist, but custom domain and DNS remain pending."
   locale_fidelity:
     status: PASS
     input: "static English content and two requested viewport probes"
@@ -49,12 +49,14 @@ gates:
   mobile_390x844: PASS
   desktop_1440x900: PASS
   full_funnel: NOT_REQUIRED
-  anonymous_production: NOT_REQUIRED
+  anonymous_production: PENDING
   checkout: PASS
 evidence: []
 blockers:
   - "VTurb player ID not supplied (vid-PLACEHOLDER remains)."
   - "Meta Pixel and UTMify IDs not supplied."
+  - "Hostinger purchase blocked after one HTTP 500 Billing:9999 response; no second charge attempted. quantumexercises.online remains PENDING."
+  - "Custom-domain DNS/TLS and public production verification remain pending because the domain was not present in the Hostinger portfolio."
 execution_control:
   budget_minutes: 45
   alert_minutes: 60
