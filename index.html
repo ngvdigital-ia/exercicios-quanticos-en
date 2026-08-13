@@ -1,147 +1,74 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="A social-style presentation for Quantum Exercises. Video and social proof integrations are pending confirmation.">
-  <meta name="theme-color" content="#eef1f5">
-  <title>Quantum Exercises — Live presentation</title>
-
-  <!-- TODO: inject owned Meta Pixel and UTMify IDs when supplied. Never place a CAPI token in HTML. -->
-  <script>
-    window.META_PIXEL_ID = "PENDING";
-    window.UTMIFY_PIXEL_ID = "PENDING";
-    window.VTURB_VIDEO_ID = "PENDING";
-  </script>
-  <!-- Performance placeholders retained for the eventual owned player/tracking integration. -->
-  <link rel="dns-prefetch" href="//cdn.converteai.net">
-  <link rel="dns-prefetch" href="//scripts.converteai.net">
-  <link rel="dns-prefetch" href="//images.converteai.net">
-  <link rel="dns-prefetch" href="//m3u8.vturb.net">
-  <link rel="dns-prefetch" href="//api.vturb.com.br">
-  <link rel="dns-prefetch" href="//cdn.utmify.com.br">
-  <link rel="dns-prefetch" href="//connect.facebook.net">
-
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--feed:#eef1f5;--card:#fff;--ink:#17191d;--muted:#69717d;--line:#e4e7eb;--blue:#1877f2;--red:#e52e4d;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-    html,body{min-height:100%;background:var(--feed);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
-    body{overflow-x:hidden;background-attachment:scroll}
-    button,a{font:inherit}
-    a{color:inherit}
-    .page{min-height:100vh;padding:20px 12px 44px}
-    .feed-card{width:100%;max-width:608px;margin:0 auto;background:var(--card);border:1px solid #e1e4e8;border-radius:10px;box-shadow:0 2px 9px #26324112;overflow:hidden}
-    .post-head{display:flex;align-items:flex-start;gap:12px;padding:15px 20px 10px}
-    .avatar-placeholder{width:48px;height:48px;flex:0 0 48px;border:1px solid #ced5dc;border-radius:50%;background:radial-gradient(circle at 50% 34%,#fff 0 11%,transparent 12%),linear-gradient(145deg,#667384,#1f2936 64%,#d5dce3);display:grid;place-items:center;overflow:hidden;color:#fff;font-size:7px;font-weight:700;letter-spacing:.5px;text-align:center;text-transform:uppercase}
-    .profile-meta{min-width:0;flex:1;padding-top:1px}
-    .profile-line{display:flex;align-items:center;gap:6px;min-width:0;font-size:17px;font-weight:700;line-height:1.25}
-    .profile-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .verified{display:inline-grid;place-items:center;width:16px;height:16px;flex:0 0 16px;border-radius:50%;background:#1976d2;color:#fff;font-size:11px;font-weight:700}
-    .subline{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-top:2px;color:#818791;font-size:14px;line-height:1.25}
-    .live-badge,.viewer-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:5px;background:#ef3151;color:#fff;font-size:13px;font-weight:700;line-height:1}
-    .live-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:#fff}
-    .globe{position:relative;width:16px;height:16px;display:inline-block;border:1.5px solid #7f8791;border-radius:50%;font-size:0;line-height:1}
-    .globe::before{content:"";position:absolute;top:2px;bottom:2px;left:5px;width:4px;border-left:1px solid #7f8791;border-right:1px solid #7f8791;border-radius:50%}
-    .globe::after{content:"";position:absolute;left:2px;right:2px;top:6px;border-top:1px solid #7f8791}
-    .more{width:28px;height:28px;margin:0 -4px 0 auto;border:0;background:transparent;color:#67717d;font-size:20px;letter-spacing:2px;line-height:1;cursor:default}
-    .post-copy{padding:0 20px 17px;font-size:18px;line-height:1.4}
-    .post-copy p+p{margin-top:24px}
-    .post-copy strong{font-weight:700}
-    .post-copy .lead::before{content:"";display:inline-block;width:18px;height:18px;margin:0 10px 1px 3px;border-radius:50%;vertical-align:middle;background:linear-gradient(145deg,#f15a6c,#dd1c3e)}
-    .post-copy .closing{margin-top:24px}
-    .video-shell{position:relative;background:#050505;padding:0 51px}
-    .video-frame{position:relative;width:100%;aspect-ratio:9/16;min-height:430px;max-height:700px;overflow:hidden;background:#08090b}
-    .video-art{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,#6e2730 0 10%,transparent 38%),radial-gradient(ellipse at 45% 23%,#c42b32 0 18%,transparent 49%),linear-gradient(160deg,#15171c,#260d12 42%,#040506 100%);filter:saturate(1.15)}
-    .video-art::before,.video-art::after{content:"";position:absolute;inset:12% 16%;border-radius:50%;background:linear-gradient(160deg,#ef4e4b66,#08090bcc 58%,transparent 60%);filter:blur(16px);transform:rotate(-12deg) scale(1.35)}
-    .video-art::after{inset:34% 0 0 39%;border-radius:54% 32% 0 0;background:linear-gradient(160deg,#e25a4d77,#090b10 67%);filter:blur(12px);transform:rotate(8deg) scale(1.08)}
-    .video-shade{position:absolute;inset:0;background:linear-gradient(180deg,#00000008 0 38%,#00000023 63%,#000000d9 100%)}
-    .video-badges{position:absolute;z-index:2;top:14px;left:14px;display:flex;gap:8px}
-    .video-badges .live-badge{padding:8px 10px;font-size:14px}
-    .viewer-badge{padding:8px 10px;background:#6f2028e8;font-size:14px}
-    .viewer-badge::before{content:"◉";font-size:11px}
-    .resume-panel{position:absolute;z-index:3;left:18px;right:18px;bottom:54px;color:#fff;text-align:center}
-    .resume-panel h2{font-size:25px;line-height:1.2;font-weight:700;text-shadow:0 2px 8px #0008}
-    .resume-option{display:flex;align-items:center;justify-content:center;gap:18px;margin:19px auto 0;color:#fff;font-size:19px;font-weight:700;text-shadow:0 2px 8px #0008}
-    .resume-icon{display:grid;place-items:center;width:42px;height:42px;border:1.5px solid #fff;border-radius:50%;font-size:21px;line-height:1}
-    .resume-icon.back{font-size:24px}
-    .pending-label{position:absolute;z-index:4;right:9px;bottom:8px;color:#ffffff90;font-size:8px;letter-spacing:1px;text-transform:uppercase}
-    .engagement{padding:14px 20px 16px}
-    .reaction-row{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--line);color:var(--muted);font-size:13px}
-    .reaction-icons{display:flex;align-items:center;gap:3px}
-    .reaction-icons span{display:grid;place-items:center;width:19px;height:19px;border-radius:50%;color:#fff;font-size:11px}
-    .reaction-icons span:first-child{background:#207cf2}.reaction-icons span:last-child{margin-left:-3px;background:#e83955}
-    .action-row{display:grid;grid-template-columns:repeat(3,1fr);padding-top:4px;color:#565e68;font-size:14px;font-weight:600;text-align:center}
-    .action{padding:9px 4px;border:0;background:transparent;color:inherit;cursor:default}
-    .action span{display:block;margin-bottom:2px;font-size:20px;font-weight:400;line-height:1}
-    .comments{padding:0 20px 18px;border-top:1px solid #f0f1f3}
-    .comment-row{display:flex;gap:10px;padding-top:15px}
-    .comment-avatar{width:32px;height:32px;flex:0 0 32px;border-radius:50%;background:linear-gradient(140deg,#cbd4df,#768496);color:#fff;display:grid;place-items:center;font-size:7px;font-weight:700;letter-spacing:.4px;text-align:center}
-    .comment-bubble{flex:1;min-width:0;padding:9px 12px;border-radius:15px;background:#f0f2f5;font-size:14px;line-height:1.35}
-    .comment-bubble strong{display:block;margin-bottom:2px;font-size:13px}
-    .comment-status{padding:8px 0 0 42px;color:#89919b;font-size:12px}
-    .cta{display:block;margin:0 20px 22px;padding:14px 18px;border-radius:7px;background:#1f74da;color:#fff;font-size:16px;font-weight:700;text-align:center;text-decoration:none}
-    .cta:hover,.cta:focus-visible{background:#165fb8}
-    .compliance{max-width:608px;margin:18px auto 0;color:#7d8792;font-size:11px;line-height:1.55;text-align:center}
-    .compliance a{color:inherit;text-decoration:underline;text-underline-offset:2px}
-    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-    @media (min-width:700px){.page{padding:20px 20px 56px}.feed-card{box-shadow:0 2px 12px #26324118}.post-head{padding-top:15px}.video-frame{min-height:500px}.post-copy{font-size:18px}}
-    @media (max-width:420px){.page{padding:0 0 34px}.feed-card{border:0;border-radius:0;box-shadow:none}.post-head{padding:14px 16px 10px}.post-copy{padding:0 16px 16px;font-size:17px}.video-shell{padding:0 28px}.video-frame{min-height:438px}.resume-panel{left:10px;right:10px;bottom:48px}.resume-panel h2{font-size:23px}.resume-option{gap:14px;font-size:17px}.engagement{padding:13px 16px 14px}.comments{padding-left:16px;padding-right:16px}.cta{margin-left:16px;margin-right:16px}.compliance{padding:0 16px}}
-    @media (max-width:350px){.video-shell{padding:0 20px}.video-frame{min-height:410px}.resume-panel h2{font-size:20px}.resume-option{font-size:15px}.resume-icon{width:36px;height:36px}}
-    @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="A live social-style presentation of Quantum Exercises.">
+<title>Live</title>
+<style>
+  :root{--bg:#f0f2f5;--card:#fff;--text:#050505;--text-2:#65676b;--divider:#ced0d4;--bubble:#f0f2f5;--blue:#1877f2;--live:#f02849;--radius:8px;--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  *,*::before,*::after{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:var(--bg);font-family:var(--font);color:var(--text);font-size:15px;line-height:1.34;-webkit-font-smoothing:antialiased}button,input{font:inherit}
+  .wrap{max-width:500px;margin:0 auto;padding:16px 8px 40px}@media(max-width:520px){.wrap{padding:0 0 32px}}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:0 1px 2px rgba(0,0,0,.1),0 0 1px rgba(0,0,0,.15);overflow:hidden}@media(max-width:520px){.card{border-radius:0;box-shadow:none}}
+  .post-head{display:flex;align-items:center;padding:12px 16px 10px}.avatar{width:42px;height:42px;border-radius:50%;flex:0 0 42px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:18px;background:linear-gradient(135deg,#6a3fb5,#8b5cf6);overflow:hidden}.avatar img{width:100%;height:100%;object-fit:cover}.head-meta{margin-left:10px;min-width:0;flex:1}.head-name{display:flex;align-items:center;gap:5px;font-weight:600;font-size:15px;line-height:1.2}.verified{width:15px;height:15px;flex:0 0 15px}.head-sub{display:flex;align-items:center;gap:5px;color:var(--text-2);font-size:13px;margin-top:2px}.live-chip{display:inline-flex;align-items:center;gap:4px;background:var(--live);color:#fff;font-size:11px;font-weight:700;padding:2px 6px;border-radius:4px;text-transform:uppercase;letter-spacing:.3px}.live-chip .dot{width:6px;height:6px;border-radius:50%;background:#fff}.dots{color:var(--text-2);font-size:20px;padding:0 4px}
+  .post-text{padding:0 16px 12px;font-size:15px;line-height:1.4;white-space:pre-wrap}.post-text b{font-weight:600}
+  .video-wrap{position:relative;width:100%;background:#000;min-height:280px}.video-stage{position:relative;width:100%;aspect-ratio:9/13;overflow:hidden;background:#111}.video-poster{position:absolute;inset:-7px;width:calc(100% + 14px);height:calc(100% + 14px);object-fit:cover;filter:blur(6px) saturate(.85)}.video-tint{position:absolute;inset:0;background:rgba(238,22,27,.86);mix-blend-mode:multiply}.video-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,25,25,.12),rgba(100,0,0,.28) 72%,rgba(0,0,0,.72))}.vid-overlay{position:absolute;top:12px;left:12px;z-index:4;display:flex;gap:8px;align-items:center;pointer-events:none}.badge-live{display:inline-flex;align-items:center;gap:5px;background:var(--live);color:#fff;font-weight:700;font-size:12px;padding:3px 8px;border-radius:5px;text-transform:uppercase}.badge-live .dot{width:7px;height:7px;border-radius:50%;background:#fff}.badge-views{display:inline-flex;align-items:center;gap:5px;background:rgba(0,0,0,.55);color:#fff;font-weight:600;font-size:12px;padding:3px 8px;border-radius:5px}.badge-views svg{width:14px;height:14px}.resume-panel{position:absolute;z-index:5;left:18px;right:18px;bottom:54px;color:#fff;text-align:center;text-shadow:0 2px 8px #0008}.resume-panel h2{margin:0;font-size:25px;line-height:1.2;font-weight:700}.resume-option{display:flex;align-items:center;justify-content:center;gap:18px;margin:19px auto 0;color:#fff;font-size:19px;font-weight:700}.resume-icon{display:grid;place-items:center;width:42px;height:42px;border:1.5px solid #fff;border-radius:50%;font-size:21px;line-height:1}.resume-icon.back{font-size:24px}
+  .float-layer{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:6}.float-emoji{position:absolute;bottom:5%;font-size:15px;line-height:1;opacity:0;will-change:transform,opacity;filter:drop-shadow(0 1px 1px rgba(0,0,0,.22));animation:fx-rise linear forwards,fx-sway ease-in-out infinite}@keyframes fx-rise{0%{opacity:0;transform:translateY(0) scale(.6)}18%{opacity:.8;transform:translateY(-14px) scale(1)}65%{opacity:.6}100%{opacity:0;transform:translateY(-180px) scale(1)}}@keyframes fx-sway{0%,100%{margin-left:0}50%{margin-left:9px}}
+  .reactions{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;font-size:14px;color:var(--text-2)}.react-left{display:flex;align-items:center;gap:6px}.emoji-stack{display:flex}.emoji-stack span{width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;margin-left:-4px;border:2px solid #fff}.emoji-stack span:first-child{margin-left:0}.e-like{background:#1877f2}.e-love{background:#f33e58}.e-wow{background:#f7b125}.react-right{display:flex;gap:12px}.divider{height:1px;background:var(--divider);margin:0 12px}
+  .actions{display:flex;padding:4px 8px}.action{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:9px 0;border-radius:6px;border:0;background:transparent;cursor:pointer;color:var(--text-2);font-weight:600;font-size:14px;user-select:none}.action:hover{background:#f2f2f2}.action svg{width:18px;height:18px;transition:transform .15s}.action.active{color:var(--blue)}.action.active svg{fill:currentColor;stroke:currentColor;transform:scale(1.05)}
+  .share-mask{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:20px}.share-mask.open{display:flex}.share-box{background:#fff;border-radius:14px;width:100%;max-width:400px;padding:18px 18px 16px;box-shadow:0 12px 40px rgba(0,0,0,.3)}.share-box h3{margin:0 0 4px;font-size:18px;font-weight:700}.share-box p{margin:0 0 14px;font-size:13px;color:var(--text-2)}.share-input-row{display:flex;gap:8px}.share-input-row input{flex:1;min-width:0;border:1px solid var(--divider);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--text);background:#f5f6f7;font-family:var(--font)}.share-input-row button{border:0;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:14px;padding:0 16px;cursor:pointer;white-space:nowrap;font-family:var(--font)}.share-input-row button.done{background:#0a8a5f}.share-close{display:block;width:100%;margin-top:12px;border:0;background:#e4e6eb;color:var(--text);font-weight:600;font-size:14px;padding:10px;border-radius:8px;cursor:pointer;font-family:var(--font)}
+  .composer{display:flex;align-items:center;gap:8px;padding:10px 16px 6px}.composer-av{width:34px;height:34px;border-radius:50%;flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px;background:linear-gradient(135deg,#8a8d91,#65676b)}.composer-field{flex:1;display:flex;align-items:center;background:var(--bubble);border-radius:20px;padding:2px 4px 2px 14px}.composer-field input{flex:1;border:0;background:transparent;outline:none;font-family:var(--font);font-size:14px;color:var(--text);padding:9px 0}.composer-field input::placeholder{color:var(--text-2)}#c-send{border:0;background:transparent;cursor:pointer;width:34px;height:34px;border-radius:50%;flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:var(--blue)}#c-send:disabled{color:#bcc0c4;cursor:default}#c-send svg{width:20px;height:20px}
+  .comments-head{display:flex;align-items:center;justify-content:space-between;padding:8px 16px 4px;color:var(--text-2);font-size:14px;font-weight:600}.comments{padding:4px 12px 8px}.comment{display:flex;gap:8px;padding:7px 4px;opacity:0;transform:translateY(6px);animation:cin .35s ease forwards}@keyframes cin{to{opacity:1;transform:none}}.c-avatar{width:34px;height:34px;border-radius:50%;flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:13px}.c-body{min-width:0;flex:1}.c-bubble{background:var(--bubble);border-radius:16px;padding:8px 12px;display:inline-block;max-width:100%}.c-name{font-weight:600;font-size:13px}.c-name .city{color:var(--text-2);font-weight:400}.c-text{font-size:14px;line-height:1.35;margin-top:1px;word-wrap:break-word}.c-meta{display:flex;gap:14px;align-items:center;padding:3px 12px 0;font-size:12px;color:var(--text-2);font-weight:600}.c-meta .t{font-weight:400}.c-like-pill{display:inline-flex;align-items:center;gap:3px;margin-left:auto;background:#fff;border:1px solid #e4e6eb;border-radius:12px;padding:1px 6px;font-size:11px;color:var(--text-2);box-shadow:0 1px 1px rgba(0,0,0,.08)}.c-like-pill .h{color:#f33e58;font-size:11px}.typing{display:flex;align-items:center;gap:8px;padding:10px 6px 2px;color:var(--text-2);font-size:13px}.typing .dots-anim span{display:inline-block;width:6px;height:6px;border-radius:50%;background:#b0b3b8;margin-right:3px;animation:tdot 1.2s infinite}.typing .dots-anim span:nth-child(2){animation-delay:.2s}.typing .dots-anim span:nth-child(3){animation-delay:.4s}@keyframes tdot{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+  .footer{max-width:500px;margin:18px auto 0;padding:0 18px;color:#8a8d91;font-size:11px;line-height:1.5;text-align:center}.footer a{color:#8a8d91;text-decoration:none}.footer a:hover{text-decoration:underline}.footer .foot-links{margin-bottom:10px;line-height:1.9}.footer .foot-links a{white-space:nowrap}.footer .foot-cnpj{margin-bottom:12px;font-weight:600}.footer .foot-disc{margin:0 auto 12px;max-width:460px}.footer .foot-copy{opacity:.9}
+  @media(max-width:420px){.resume-panel{left:10px;right:10px;bottom:48px}.resume-panel h2{font-size:23px}.resume-option{gap:14px;font-size:17px}.video-stage{min-height:438px}}@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+</style>
 </head>
 <body>
-  <div class="page">
-    <main class="feed-card" aria-label="Quantum Exercises social presentation">
-      <article>
-        <header class="post-head">
-          <!-- Local neutral placeholder: no reference avatar or person identity is copied. -->
-          <div class="avatar-placeholder" aria-label="Profile image pending">PENDING</div>
-          <div class="profile-meta">
-            <div class="profile-line"><span class="profile-name">Quantum Exercises</span><span class="verified" aria-label="Verification pending">✓</span></div>
-            <div class="subline"><span>38 min</span><span class="live-badge">LIVE</span><span class="globe" aria-hidden="true"></span></div>
-          </div>
-          <button class="more" type="button" aria-label="More options">···</button>
-        </header>
+  <div class="wrap">
+    <main class="card" aria-label="Quantum Exercises social presentation">
+      <header class="post-head">
+        <div class="avatar"><img src="/assets/avatar.png" alt="Quantum Exercises profile"></div>
+        <div class="head-meta"><div class="head-name"><span>Quantum Exercises of Jesus Christ</span><svg class="verified" viewBox="0 0 24 24" fill="#1877f2" aria-label="Verified"><path d="M12 1l2.9 2.1 3.5-.3 1.3 3.3 3.1 1.7-.9 3.4.9 3.4-3.1 1.7-1.3 3.3-3.5-.3L12 23l-2.9-2.1-3.5.3-1.3-3.3L1.2 16l.9-3.4L1.2 9.2 4.3 7.5l1.3-3.3 3.5.3z"/><path d="M10.6 14.6l-2.2-2.2-1.1 1.1 3.3 3.3 6-6-1.1-1.1z" fill="#fff"/></svg></div><div class="head-sub"><span>38 min ago</span><span>·</span><span class="live-chip"><span class="dot"></span>Live</span><span>·</span><span>🌎</span></div></div>
+        <div class="dots" aria-label="More options">⋯</div>
+      </header>
 
-        <div class="post-copy">
-          <p>If you prayed for a life-changing breakthrough this week, it was not a coincidence that you arrived here.</p>
-          <p class="lead"><strong>Quantum physics explained a pattern repeated in ALL of Christ's miracles</strong>, and I will reveal how to apply it to your financial life, relationships, and inner peace.</p>
-          <p class="closing">Watch before it goes away.</p>
+      <div class="post-text"><p>If you prayed for a life-changing breakthrough this week, it was not a coincidence that you arrived here.</p><p>🔴 <b>Quantum physics managed to explain a pattern that repeats in ALL of Christ's miracles</b>, and I will reveal how to apply it to your financial life, your relationships, and your inner peace.</p><p>Watch before it goes off the air 👇🙏</p></div>
+
+      <section class="video-wrap" aria-label="Video presentation">
+        <div class="vid-overlay"><span class="badge-live"><span class="dot"></span>Live</span><span class="badge-views"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span id="views-count">4,403</span></span></div>
+        <div class="float-layer" id="float-layer"></div>
+        <div class="video-stage">
+          <img class="video-poster" src="/assets/video-asset-13.jpg" alt="Quantum Exercises video presentation"><div class="video-tint" aria-hidden="true"></div><div class="video-shade" aria-hidden="true"></div>
+          <div class="resume-panel"><h2>You already started watching this video</h2><div class="resume-option"><span class="resume-icon" aria-hidden="true">▶</span><span>Continue watching?</span></div><div class="resume-option"><span class="resume-icon back" aria-hidden="true">↶</span><span>Watch from the beginning?</span></div></div>
         </div>
+      </section>
 
-        <section class="video-shell" aria-label="Video presentation placeholder">
-          <div class="video-frame" data-video-id="vid-PLACEHOLDER">
-            <div class="video-art" aria-hidden="true"></div><div class="video-shade" aria-hidden="true"></div>
-            <div class="video-badges"><span class="live-badge">LIVE</span><span class="viewer-badge">VIEWERS PENDING</span></div>
-            <div class="resume-panel">
-              <h2>You already started watching this video</h2>
-              <div class="resume-option"><span class="resume-icon" aria-hidden="true">▶</span><span>Continue watching?</span></div>
-              <div class="resume-option"><span class="resume-icon back" aria-hidden="true">↶</span><span>Watch from the beginning?</span></div>
-            </div>
-            <span class="pending-label">Player pending</span>
-          </div>
-        </section>
-
-        <section class="engagement" aria-label="Post actions">
-          <div class="reaction-row"><div class="reaction-icons" aria-label="Reactions pending"><span>♥</span><span>●</span><span class="sr-only">Reaction data pending</span></div><span>Reactions pending · Comments pending</span></div>
-          <div class="action-row"><button class="action" type="button"><span aria-hidden="true">♡</span>Like</button><button class="action" type="button"><span aria-hidden="true">◌</span>Comment</button><button class="action" type="button"><span aria-hidden="true">↗</span>Share</button></div>
-        </section>
-
-        <section class="comments" aria-label="Comments placeholder">
-          <div class="comment-row"><div class="comment-avatar" aria-label="Commenter placeholder">PENDING</div><div class="comment-bubble"><strong>Community comment pending</strong>Authentic comments will appear here after approval.</div></div>
-          <div class="comment-status">Like · Reply · Pending timestamp</div>
-        </section>
-
-        <!-- Confirmed owned checkout kept literal and attached only to this page's CTA. -->
-        <a class="cta" href="https://pay.assiny.com.br/8a4744/node/OuQUyh?utm_target=lead9">Continue to the full program</a>
-      </article>
+      <section class="reactions" aria-label="Reactions"><div class="react-left"><span class="emoji-stack"><span class="e-love">❤️</span><span class="e-like">👍</span><span class="e-wow">😮</span></span><span>3.1K</span></div><div class="react-right"><span>892 comments</span><span>1.4K shares</span></div></section>
+      <div class="divider"></div>
+      <div class="actions"><button class="action" id="btn-like" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.3a2 2 0 0 0 2-1.7l1.4-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg><span class="lbl">Like</span></button><button class="action" id="btn-comment" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="lbl">Comment</span></button><button class="action" id="btn-share" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg><span class="lbl">Share</span></button></div>
+      <div class="divider"></div>
+      <div class="composer"><div class="composer-av">🙂</div><div class="composer-field"><input id="c-input" type="text" maxlength="180" placeholder="Write a comment…" autocomplete="off"><button id="c-send" disabled aria-label="Send" type="button"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5l18-8.5L3 3.5 3 10l12 2-12 2z"/></svg></button></div></div>
+      <div class="comments-head"><span>Most relevant ▾</span></div><div class="typing" id="typing" style="display:none"><span class="dots-anim"><span></span><span></span><span></span></span><span id="typing-name">Someone</span> is typing…</div><div class="comments" id="comments"></div>
     </main>
-    <footer class="compliance">
-      <a href="#privacy">Privacy Policy</a> · <a href="#terms">Terms of Use</a> · <a href="#refunds">Refund Policy</a><br>
-      Business registration: PENDING · © 2026 Quantum Exercises. All rights reserved.<br>
-      This page is not affiliated with Google™, Meta™ or TikTok™. Results vary; no financial gains are guaranteed.
-    </footer>
+    <div class="share-mask" id="share-mask"><div class="share-box"><h3>Share</h3><p>Copy the link and send it to someone who needs to see this 🙏</p><div class="share-input-row"><input id="share-url" type="text" readonly><button id="share-copy" type="button">Copy</button></div><button class="share-close" id="share-close" type="button">Close</button></div></div>
+    <footer class="footer"><div class="foot-links"><a href="/privacy-policy">Privacy Policy</a> · <a href="/about">About us</a> · <a href="/terms-of-use">Terms of Use</a> · <a href="/acceptance-terms">Acceptance Terms</a> · <a href="/refund-terms">Refund Terms</a></div><div class="foot-cnpj">Business registration: 51.192.453/0001-06</div><p class="foot-disc">This site is not affiliated with Google™, Meta™ or TikTok™ and is not endorsed by these companies in any way. Google™ is a registered trademark of Google LLC™. Results vary and no financial gains are guaranteed. See the links above for our complete terms and policies.</p><div class="foot-copy">© 2026 Paulo Aguiar — All rights reserved</div></footer>
   </div>
+<script>
+(()=>{
+  const $=s=>document.querySelector(s), viewsEl=$("#views-count"); let views=4403; const fmt=n=>n.toLocaleString("en-US");
+  setInterval(()=>{views+=Math.random()<.83?2+Math.floor(Math.random()*8):-(1+Math.floor(Math.random()*2));if(views<4403)views=4403;viewsEl.textContent=fmt(views)},2200);
+  const floatLayer=$("#float-layer"), emojis=["🙏","🙏","🙏","❤️","❤️","😍","👏","🔥","😮","🙌"]; function spawn(){const e=document.createElement("span");e.className="float-emoji";e.textContent=emojis[Math.floor(Math.random()*emojis.length)];e.style.left=85+Math.random()*8+"%";e.style.fontSize=13+Math.random()*5+"px";const rise=2.6+Math.random()*1.4;e.style.animationDuration=rise+"s,"+(1+Math.random()*.6)+"s";floatLayer.appendChild(e);setTimeout(()=>e.remove(),rise*1000+200)}(function loop(){spawn();setTimeout(loop,1800+Math.random()*2800)})();
+  const palette=["#e0607e","#6a3fb5","#0a8a5f","#c0682a","#2b7cd3","#b23b8f","#3aa39a","#a1462f"],initials=n=>n.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase();let colorIdx=0,pickColor=()=>palette[(colorIdx++)%palette.length],box=$("#comments");
+  const comments=[
+    {name:"Marlene Souza",city:"Belo Horizonte",text:"I just got here 🙏",at:5},{name:"Anthony Ferreira",text:"Good evening everyone",likes:6,at:16},{name:"Cleusa Ramos",text:"I’m enjoying this",at:29},{name:"Robert Lima",city:"Curitiba",text:"Where are you watching from? São Paulo here 🙌",at:46},{name:"Sandra Aparecida",text:"Amen 🙏",at:68},{name:"Joseph Carlos",text:"So glad I found this video",at:92},{name:"Vera Lucia",city:"Salvador",text:"I’m paying close attention",at:120},{name:"Paul Henry",text:"This is different from anything I’ve seen",likes:11,at:150},{name:"Ines Goncalves",text:"Following until the end 🙏",at:185},{name:"Marcus Vinicius",city:"Recife",text:"Grateful for this 🙌",at:220},{name:"Antonia Rocha",text:"What a story 🙏",at:258},{name:"Claudio Mendes",text:"Wait, what do you mean hell doesn’t exist? 😮",likes:23,at:491},{name:"Regina Salles",text:"That makes so much sense",at:590},{name:"Luke Andrade",text:"I heard ‘money doesn’t grow on trees’ my whole life 😔",likes:31,at:632},{name:"Martha Ribeiro",text:"I had never heard of this law",at:701},{name:"Douglas Ramos",text:"I cried just now, so it isn’t my fault 🙏",likes:44,at:745},{name:"Elaine Cardoso",text:"This is real science, incredible",at:845},{name:"Rafael Teixeira",text:"I studied the double slit in school and never connected it to this",at:901},{name:"Beatrice Nunes",text:"So I am the observer 🤯",likes:52,at:956},{name:"Sergio Almeida",text:"So it’s the feeling… it makes sense 🙏",at:1048},{name:"Patricia Gomes",text:"I said it out loud here at home 😅",at:1218},{name:"Fernanda Dias",text:"That’s what I needed to hear, I’ll do it today 🙏",likes:67,at:1311},{name:"Otavio Ramos",text:"I was going to ask that too haha",at:1531},{name:"Juliana Freitas",text:"Writing down the 3 pillars here 📝",at:1580},{name:"Charles Edward",text:"From painter’s helper to this, what a testimony 🙌",at:1637},{name:"Simone Barros",text:"The testimonials feel so real",at:1881},{name:"Rodrigo Lima",text:"I want to learn this method",at:2021},{name:"Aline Castro",text:"I can do 21 days 🙏",at:2058},{name:"Marcelo Souza",text:"I’m curious about the price",at:2345},{name:"Tania Oliveira",text:"I just secured mine 🙏🙏",likes:38,at:2443},{name:"Bruno Martins",text:"I signed up, grateful 🙌",at:2500},{name:"Helena Duarte",text:"Is there still time to join?",at:2990}
+  ];
+  function ageText(born){const m=Math.floor((Date.now()-born)/60000);return m<1?"now":m===1?"1 min":m+" min"}function render(c,age=0){const el=document.createElement("div"),like=c.likes?'<span class="c-like-pill"><span class="h">❤️</span>'+fmt(c.likes)+'</span>':'';el.className="comment";const city=c.city?' <span class="city">· '+c.city+'</span>':'';const born=Date.now()-age*1000;el.innerHTML='<div class="c-avatar" style="background:'+pickColor()+'">'+initials(c.name)+'</div><div class="c-body"><div class="c-bubble"><div class="c-name">'+c.name+city+'</div><div class="c-text">'+c.text+'</div></div><div class="c-meta"><span>Like</span><span>Reply</span><span class="t" data-born="'+born+'">'+ageText(born)+'</span>'+like+'</div></div>';box.insertBefore(el,box.firstChild)}
+  let qi=0;function tick(){const elapsed=(Date.now()-start)/1000;while(qi<comments.length&&elapsed>=comments[qi].at){render(comments[qi],Math.max(0,elapsed-comments[qi].at));qi++}}const start=Date.now();setInterval(tick,1000);setInterval(()=>box.querySelectorAll(".c-meta .t").forEach(s=>s.textContent=ageText(+s.dataset.born)),15000);
+  const like=$("#btn-like");like.addEventListener("click",()=>{const on=like.classList.toggle("active");like.querySelector(".lbl").textContent=on?"Liked":"Like"});$("#btn-comment").addEventListener("click",()=>{const i=$("#c-input");i.scrollIntoView({behavior:"smooth",block:"center"});setTimeout(()=>i.focus(),300)});
+  const mask=$("#share-mask"),url=$("#share-url"),copy=$("#share-copy"),link=window.location.href;$("#btn-share").addEventListener("click",()=>{url.value=link;mask.classList.add("open")});function close(){mask.classList.remove("open");copy.textContent="Copy";copy.classList.remove("done")}$("#share-close").addEventListener("click",close);mask.addEventListener("click",e=>{if(e.target===mask)close()});copy.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(link)}catch(e){url.select();document.execCommand("copy")}copy.textContent="Copied!";copy.classList.add("done")});
+  const input=$("#c-input"),send=$("#c-send");input.addEventListener("input",()=>send.disabled=input.value.trim()==="");function submit(){const text=input.value.trim();if(!text)return;render({name:"You",text,color:"#1877f2"});input.value="";send.disabled=true}send.addEventListener("click",submit);input.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();submit()}})
+})();
+</script>
 </body>
 </html>
