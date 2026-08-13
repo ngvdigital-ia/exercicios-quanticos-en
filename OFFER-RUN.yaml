@@ -1,0 +1,62 @@
+schema: codex-offer-run.v1
+offer: "Exercicios Quanticos - Traduzir INGLES"
+target_folder: "/home/pedro_victor/dev/NGV_Digital/workspaces/ofertas-ngv/exercicios-quanticos-en"
+scope_lock:
+  allowed_paths:
+    - "/home/pedro_victor/dev/NGV_Digital/workspaces/ofertas-ngv/exercicios-quanticos-en"
+  support_files:
+    - "/home/pedro_victor/dev/NGV_Digital/workspaces/ofertas-ngv/.claude/scripts/qa-clone.py"
+  forbidden_without_new_authorization:
+    - "/home/pedro_victor/dev/NGV_Digital/workspaces/n8n-projetos"
+    - "C:\\meu-framework"
+briefing:
+  origin: "clickup"
+  task_context_input: "ClickUp task 86ak08kwx (parent 86ak08kjy)"
+  task_context_input_sha256: ""
+  clickup_parent: "86ak08kjy"
+  documento_principal: "https://docs.google.com/document/d/10CPmewugZGbt9hK4MOboyl7-oWaqPn-9D1I_ka1DRl4/edit"
+  source_url: "https://pauloaguiarx.com.br/eqjc-f01-p04-vendas-vsl-meta"
+  domain: "PENDING"
+  route: "/"
+  page_type: "vsl"
+  vturb_player_id: "PENDING"
+  meta_pixel_id: "PENDING"
+  utmify_pixel_id: "PENDING"
+  checkout_url: "https://pay.assiny.com.br/8a4744/node/OuQUyh?utm_target=lead9"
+status: "waiting-video"
+decisions:
+  - "VSL simples, conversao-first, seguindo a ordem visual da referencia."
+  - "Intensidade restrita adotada como assuncao operacional do briefing."
+  - "Texto visivel traduzido para ingles; nenhuma identidade ou tracker da referencia foi copiado."
+  - "VTurb, Meta Pixel e UTMify permanecem PENDING; nao e launch-ready."
+files_touched:
+  - "/home/pedro_victor/dev/NGV_Digital/workspaces/ofertas-ngv/exercicios-quanticos-en/OFFER-RUN.yaml"
+  - "/home/pedro_victor/dev/NGV_Digital/workspaces/ofertas-ngv/exercicios-quanticos-en/index.html"
+gates:
+  issue_ledger:
+    status: NOT_REQUIRED
+    input: ""
+    state: "/home/pedro_victor/dev/NGV_Digital/workspaces/ofertas-ngv/.codex/state/notification-ledger.json"
+  domain_lifecycle:
+    status: NOT_REQUIRED
+    input: "domain is PENDING; no DNS/deploy requested"
+  locale_fidelity:
+    status: PASS
+    input: "static English content and two requested viewport probes"
+  scope: PASS
+  static: PASS
+  tracking: PENDING
+  mobile_390x844: PASS
+  desktop_1440x900: PASS
+  full_funnel: NOT_REQUIRED
+  anonymous_production: NOT_REQUIRED
+  checkout: PASS
+evidence: []
+blockers:
+  - "VTurb player ID not supplied (vid-PLACEHOLDER remains)."
+  - "Meta Pixel and UTMify IDs not supplied."
+execution_control:
+  budget_minutes: 45
+  alert_minutes: 60
+  same_gate_failures: 0
+  interrupted_worker: false
