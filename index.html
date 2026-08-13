@@ -40,7 +40,9 @@
     .subline{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-top:2px;color:#818791;font-size:14px;line-height:1.25}
     .live-badge,.viewer-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:5px;background:#ef3151;color:#fff;font-size:13px;font-weight:700;line-height:1}
     .live-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:#fff}
-    .globe{font-size:16px;line-height:1}
+    .globe{position:relative;width:16px;height:16px;display:inline-block;border:1.5px solid #7f8791;border-radius:50%;font-size:0;line-height:1}
+    .globe::before{content:"";position:absolute;top:2px;bottom:2px;left:5px;width:4px;border-left:1px solid #7f8791;border-right:1px solid #7f8791;border-radius:50%}
+    .globe::after{content:"";position:absolute;left:2px;right:2px;top:6px;border-top:1px solid #7f8791}
     .more{width:28px;height:28px;margin:0 -4px 0 auto;border:0;background:transparent;color:#67717d;font-size:20px;letter-spacing:2px;line-height:1;cursor:default}
     .post-copy{padding:0 20px 17px;font-size:18px;line-height:1.4}
     .post-copy p+p{margin-top:24px}
@@ -97,7 +99,7 @@
           <div class="avatar-placeholder" aria-label="Profile image pending">PENDING</div>
           <div class="profile-meta">
             <div class="profile-line"><span class="profile-name">Quantum Exercises</span><span class="verified" aria-label="Verification pending">✓</span></div>
-            <div class="subline"><span>38 min</span><span class="live-badge">LIVE</span><span class="globe" aria-hidden="true">🌐</span></div>
+            <div class="subline"><span>38 min</span><span class="live-badge">LIVE</span><span class="globe" aria-hidden="true"></span></div>
           </div>
           <button class="more" type="button" aria-label="More options">···</button>
         </header>
